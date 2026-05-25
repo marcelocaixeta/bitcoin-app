@@ -1,5 +1,13 @@
 # Getting Started with Create React App
 
+## Procedimentos para deploy no GitHub Pages
+
+1. Alterar código
+2. Commit + push no main
+git add … → git commit → git push
+3. Publicar no Pages
+npm run deploy
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
