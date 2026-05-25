@@ -54,7 +54,7 @@ const options = {
     },
 
     title: {
-        text: 'Indicador de Compra e Venda de Bitcoin (BTC)',
+        text: 'Indicador de Compra e Venda de Bitcoin',
         style: {
             color: '#FFFFFF' // Define a cor do texto para branco
         }
