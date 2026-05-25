@@ -72,7 +72,7 @@ const ChartLineDouble = ({ bitcoinPrices, fearAndGreedIndex, labels }) => {
       alignItems: 'center'
     }} >
       <div style={{ width: '88%' }}>
-        <h2 style={{ color: '#FFFFFF' }}>Evolução do Preço do BTC Diante do FGI nos Últimos 30 Dias</h2>
+        <h2 style={{ color: '#FFFFFF' }}>Preço do BTC Diante do FGI nos Últimos 30 Dias</h2>
         <Line data={data} options={options} />
       </div>
     </div>
