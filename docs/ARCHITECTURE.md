@@ -1,4 +1,4 @@
-# Arquitetura — Bitcoin App → Plataforma de finanças pessoais
+# Nova Arquitetura — Bitcoin App → Plataforma de finanças pessoais
 
 Documento de referência para o frontend React (GitHub Pages), rotas, autenticação e integração com API **Laravel + PostgreSQL**.
 
