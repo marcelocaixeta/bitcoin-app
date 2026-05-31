@@ -42,7 +42,7 @@ const BitcoinPriceHeader = () => {
     .toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
   return (
-    <div className="App">
+    <div className="bitcoin-price-header">
       <h3>BTC: $ {formattedNumber}</h3>
       <div
         id="planoFundo"
@@ -55,7 +55,7 @@ const BitcoinPriceHeader = () => {
           alignItems: 'center',
         }}
       >
-        <div>
+        <div className="bitcoin-gauge-shell">
           <FearGreedGauge />
         </div>
       </div>

@@ -52,14 +52,14 @@ const options = {
   },
   title: {
     text: 'Indicador de Compra e Venda de Bitcoin',
-    style: { color: '#FFFFFF' },
+    style: { color: '#FFFFFF', fontSize: '16px' },
   },
   pane: {
     startAngle: -90,
     endAngle: 89.9,
     background: null,
     center: ['50%', '75%'],
-    size: '110%',
+    size: '100%',
   },
   yAxis: {
     min: 0,
@@ -114,6 +114,37 @@ const options = {
       },
     },
   ],
+  responsive: {
+    rules: [
+      {
+        condition: {
+          maxWidth: 520,
+        },
+        chartOptions: {
+          chart: {
+            height: 340,
+          },
+          title: {
+            style: { color: '#FFFFFF', fontSize: '14px' },
+          },
+          pane: {
+            center: ['50%', '72%'],
+            size: '86%',
+          },
+          yAxis: {
+            tickLength: 14,
+            labels: {
+              distance: 12,
+              style: {
+                fontSize: '12px',
+                color: '#FFFFFF',
+              },
+            },
+          },
+        },
+      },
+    ],
+  },
 };
 
 const FearGreedGauge = () => {
@@ -146,32 +177,25 @@ const FearGreedGauge = () => {
   ];
 
   return (
-    <div>
+    <div className="fear-greed-gauge">
       <HighchartsReact highcharts={Highcharts} options={options} />
-      <div style={{ marginTop: '1%' }}>
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            color: '#FFFFFF',
-            backgroundColor: '#282c34',
-          }}
-        >
+      <div className="fear-greed-table-wrap">
+        <table className="fear-greed-table">
           <thead>
             <tr />
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
-                <td style={{ border: '1px solid #FFFFFF', padding: '8px' }}>{item.phase}</td>
-                <td style={{ border: '1px solid #FFFFFF', padding: '8px' }}>{item.range}</td>
-                <td style={{ border: '1px solid #FFFFFF', padding: '8px', backgroundColor: item.color }}>
+                <td>{item.phase}</td>
+                <td>{item.range}</td>
+                <td style={{ backgroundColor: item.color }}>
                   {item.value}
                 </td>
               </tr>
             ))}
             <tr>
-              <td style={{ border: '1px solid #FFFFFF', padding: '8px' }} colSpan={3}>
+              <td colSpan={3}>
                 Atualiza em {val[3]}
               </td>
             </tr>

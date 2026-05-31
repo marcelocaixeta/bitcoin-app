@@ -181,9 +181,9 @@ export const MarketInsightsPage = () => {
       {/* Conteúdo Original */}
       <div className="App">
         <header className="App-header">
-          <h1>
+          <div className="market-insights-header-content">
             <BitcoinPriceHeader />
-          </h1>
+          </div>
         </header>
 
         <div className="chart-container">
