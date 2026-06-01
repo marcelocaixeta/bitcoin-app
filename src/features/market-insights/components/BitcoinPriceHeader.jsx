@@ -5,18 +5,22 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import FearGreedGauge from './FearGreedGauge';
 import getBitcoinPriceData from '../services/bitcoinPriceService';
 
-const precoBtcHoje = await getBitcoinPriceData(1);
-
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const BitcoinPriceHeader = () => {
   const [data, setData] = useState(null);
+  const [bitcoinPrice, setBitcoinPrice] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://api.alternative.me/fng/?limit=1');
-        setData(response.data.data);
+        const [fearGreedResponse, bitcoinPrices] = await Promise.all([
+          axios.get('https://api.alternative.me/fng/?limit=1'),
+          getBitcoinPriceData(1),
+        ]);
+
+        setData(fearGreedResponse.data.data);
+        setBitcoinPrice(bitcoinPrices.at(-1) ?? null);
       } catch (error) {
         console.error('Error fetching the data:', error);
       }
@@ -36,14 +40,14 @@ const BitcoinPriceHeader = () => {
       },
     ],
   };
-  console.log(precoBtcHoje, doughnutData);
-  const formattedNumber = precoBtcHoje[1]
-    .toFixed(2)
-    .toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  console.log(bitcoinPrice, doughnutData);
+  const formattedNumber = bitcoinPrice
+    ? bitcoinPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    : 'Indisponivel';
 
   return (
     <div className="bitcoin-price-header">
-      <h3>BTC: $ {formattedNumber}</h3>
+      <h3>BTC: {formattedNumber}</h3>
       <div
         id="planoFundo"
         style={{

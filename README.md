@@ -8,6 +8,18 @@ git add … → git commit → git push
 3. Publicar no Pages
 npm run deploy
 
+## Docker para desenvolvimento local
+
+O container do frontend roda o Create React App na porta 3000 e aponta para a API local em `http://localhost:8000/api`.
+
+```bash
+docker compose up -d --build
+```
+
+Depois acesse [http://localhost:3000](http://localhost:3000).
+
+Esse container não altera o fluxo de deploy atual. O comando `npm run deploy` continua executando `npm run build` e publicando a pasta `build` no GitHub Pages com `gh-pages -d build`.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

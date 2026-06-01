@@ -1,20 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import getFearAndGreedService from '../services/fearGreedService';
 import getBitcoinPriceData from '../services/bitcoinPriceService';
 
-const dataFag = await getFearAndGreedService(30);
-const dataBtc = await getBitcoinPriceData(30);
-
 const FearAndGreedChartLine = () => {
+  const [chartData, setChartData] = useState({
+    fearGreed: [[], []],
+    bitcoinPrices: [],
+    isLoading: true,
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchChartData = async () => {
+      const [fearGreed, bitcoinPrices] = await Promise.all([
+        getFearAndGreedService(30),
+        getBitcoinPriceData(30),
+      ]);
+
+      if (isMounted) {
+        setChartData({
+          fearGreed,
+          bitcoinPrices,
+          isLoading: false,
+        });
+      }
+    };
+
+    fetchChartData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const data = {
-    labels: dataFag[1],
+    labels: chartData.fearGreed[1],
     datasets: [
       {
         type: 'line',
         label: 'Preco do Bitcoin (BTC)',
-        data: dataBtc.slice(-30),
+        data: chartData.bitcoinPrices.slice(-30),
         borderColor: 'rgb(255, 215, 0)',
         backgroundColor: 'rgba(255, 215, 0, 0.2)',
         yAxisID: 'y1',
@@ -22,7 +50,7 @@ const FearAndGreedChartLine = () => {
       {
         type: 'line',
         label: 'Fear and Greed Index (FGI)',
-        data: dataFag[0],
+        data: chartData.fearGreed[0],
         fill: false,
         borderColor: 'rgb(54, 162, 235)',
         yAxisID: 'y2',
@@ -75,7 +103,11 @@ const FearAndGreedChartLine = () => {
     >
       <div style={{ width: '88%' }}>
         <h2 style={{ color: '#FFFFFF' }}>Preco do BTC Diante do FGI nos Ultimos 30 Dias</h2>
-        <Line data={data} options={options} />
+        {chartData.isLoading ? (
+          <p style={{ color: '#FFFFFF' }}>Carregando...</p>
+        ) : (
+          <Line data={data} options={options} />
+        )}
       </div>
     </div>
   );
