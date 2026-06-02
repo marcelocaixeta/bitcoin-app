@@ -3,6 +3,7 @@ import {
   BitcoinPriceHeader,
   FearAndGreedChartLine,
 } from '../features/market-insights';
+import httpClient from '../shared/api/httpClient';
 
 export const MarketInsightsPage = () => {
   // Estados para autenticação e menu
@@ -61,15 +62,31 @@ export const MarketInsightsPage = () => {
     alert('Você saiu da conta. Área financeira bloqueada.');
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     const email = prompt('Digite seu e-mail para cadastro:', 'usuario@email.com');
-    if (email && email.includes('@')) {
-      const name = email.split('@')[0];
+
+    if (!email) {
+      return;
+    }
+
+    if (!email.includes('@')) {
+      alert('Por favor, insira um e-mail válido');
+      return;
+    }
+
+    try {
+      const response = await httpClient.post('/v1/email-signups', {
+        email,
+        source: 'registration-popup',
+      });
+
+      const savedEmail = response.data?.data?.email ?? email;
+      const name = savedEmail.split('@')[0];
       localStorage.setItem('loggedUser', name);
       setIsLoggedIn(true);
       setUserName(name);
-    } else if (email) {
-      alert('Por favor, insira um e-mail válido');
+    } catch (error) {
+      alert('Não foi possível salvar seu e-mail agora. Tente novamente.');
     }
   };
 
