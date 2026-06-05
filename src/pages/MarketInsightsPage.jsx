@@ -99,7 +99,7 @@ export const MarketInsightsPage = () => {
           <li onClick={() => {
             closeMenu();
             document.getElementById('btc-fgi-chart')?.scrollIntoView({ behavior: 'smooth' });
-          }}>📈 Análises</li>
+          }}>📈 Análise do BTC x FGI</li>
         </ul>
       </div>
 
