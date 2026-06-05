@@ -51,7 +51,10 @@ const options = {
     height: '80%',
   },
   title: {
-    text: 'Indicador de Compra e Venda de Bitcoin',
+    text: 'Indicador Principal',
+    align: 'center',
+    x: 0,
+    y: 28,
     style: { color: '#FFFFFF', fontSize: '16px' },
   },
   pane: {
@@ -179,7 +182,7 @@ const FearGreedGauge = () => {
   return (
     <div className="fear-greed-gauge">
       <HighchartsReact highcharts={Highcharts} options={options} />
-      <div className="fear-greed-table-wrap">
+      <div id="indicator-history" className="fear-greed-table-wrap">
         <table className="fear-greed-table">
           <thead>
             <tr />

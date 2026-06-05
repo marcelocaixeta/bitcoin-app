@@ -1,0 +1,4 @@
+services:
+  backend:
+    environment:
+      FRONTEND_URL: http://localhost:3000

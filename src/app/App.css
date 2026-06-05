@@ -1,6 +1,11 @@
+:root {
+  --top-bar-height: 64px;
+}
+
 .App {
   text-align: center;
-  margin-top: -2%;
+  margin-top: 0;
+  padding-top: var(--top-bar-height);
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
@@ -52,9 +57,14 @@
   background: #0f1222;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #1e243b;
-  position: sticky;
+  box-sizing: border-box;
+  height: var(--top-bar-height);
+  position: fixed;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .logo-area h2 {
@@ -152,7 +162,7 @@
   border-right: 1px solid #252b45;
   padding: 2rem 1.5rem;
   transition: left 0.3s ease;
-  z-index: 200;
+  z-index: 1100;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -199,7 +209,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 150;
+  z-index: 1050;
 }
 
 /* Modal */
@@ -363,6 +373,10 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
+  :root {
+    --top-bar-height: 60px;
+  }
+
   .top-bar {
     padding: 0.75rem 1rem;
   }
@@ -447,6 +461,7 @@
 
 .fear-greed-table-wrap {
   margin-top: 1%;
+  scroll-margin-top: calc(var(--top-bar-height) + 16px);
   width: 100%;
   overflow: hidden;
 }
@@ -516,6 +531,10 @@
 }
 
 @media (max-width: 520px) {
+  :root {
+    --top-bar-height: 56px;
+  }
+
   .top-bar {
     gap: 8px;
     padding: 0.65rem 0.75rem;

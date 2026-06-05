@@ -3,16 +3,12 @@ import {
   BitcoinPriceHeader,
   FearAndGreedChartLine,
 } from '../features/market-insights';
-import httpClient from '../shared/api/httpClient';
 
 export const MarketInsightsPage = () => {
   // Estados para autenticação e menu
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
   
   // Estados para controle financeiro
   const [financialData, setFinancialData] = useState({
@@ -39,55 +35,11 @@ export const MarketInsightsPage = () => {
     setIsMenuOpen(false);
   };
 
-  // Funções de autenticação
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (loginEmail && loginPassword) {
-      const name = loginEmail.split('@')[0];
-      localStorage.setItem('loggedUser', name);
-      setIsLoggedIn(true);
-      setUserName(name);
-      setIsLoginModalOpen(false);
-      setLoginEmail('');
-      setLoginPassword('');
-    } else {
-      alert('Preencha e-mail e senha');
-    }
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('loggedUser');
     setIsLoggedIn(false);
     setUserName('');
     alert('Você saiu da conta. Área financeira bloqueada.');
-  };
-
-  const handleSignup = async () => {
-    const email = prompt('Digite seu e-mail para cadastro:', 'usuario@email.com');
-
-    if (!email) {
-      return;
-    }
-
-    if (!email.includes('@')) {
-      alert('Por favor, insira um e-mail válido');
-      return;
-    }
-
-    try {
-      const response = await httpClient.post('/v1/email-signups', {
-        email,
-        source: 'registration-popup',
-      });
-
-      const savedEmail = response.data?.data?.email ?? email;
-      const name = savedEmail.split('@')[0];
-      localStorage.setItem('loggedUser', name);
-      setIsLoggedIn(true);
-      setUserName(name);
-    } catch (error) {
-      alert('Não foi possível salvar seu e-mail agora. Tente novamente.');
-    }
   };
 
   // Adicionar nova despesa
@@ -115,20 +67,11 @@ export const MarketInsightsPage = () => {
         </button>
 
         <div className="logo-area">
-          <h2>₿ Controle Financeiro Pessoal</h2>
+          <h2>₿ Indicador de Compra e Venda de Bitcoin</h2>
         </div>
 
         <div className="auth-area">
-          {!isLoggedIn ? (
-            <>
-              <button className="btn-outline" onClick={() => setIsLoginModalOpen(true)}>
-                Entrar
-              </button>
-              <button className="btn-primary" onClick={handleSignup}>
-                Registrar
-              </button>
-            </>
-          ) : (
+          {isLoggedIn && (
             <div className="user-greeting">
               <span>👋 Olá, {userName}</span>
               <button className="btn-outline" onClick={handleLogout}>
@@ -145,55 +88,23 @@ export const MarketInsightsPage = () => {
           ✕ Fechar
         </button>
         <ul>
-          <li onClick={closeMenu}>📊 Dashboard BTC</li>
-          <li onClick={closeMenu}>📈 Análises</li>
           <li onClick={() => {
             closeMenu();
-            document.getElementById('financial-panel')?.scrollIntoView({ behavior: 'smooth' });
-          }}>💰 Finanças Pessoais</li>
-          <li onClick={closeMenu}>⚙️ Configurações</li>
-          <li onClick={closeMenu}>🆘 Suporte</li>
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}>₿ Indicador Principal</li>
+          <li onClick={() => {
+            closeMenu();
+            document.getElementById('indicator-history')?.scrollIntoView({ behavior: 'smooth' });
+          }}>📋 Histórico do Indicador</li>
+          <li onClick={() => {
+            closeMenu();
+            document.getElementById('btc-fgi-chart')?.scrollIntoView({ behavior: 'smooth' });
+          }}>📈 Análises</li>
         </ul>
       </div>
 
       {/* Overlay para fechar menu */}
       {isMenuOpen && <div className="overlay" onClick={closeMenu}></div>}
-
-      {/* Modal de Login */}
-      {isLoginModalOpen && (
-        <div className="modal active" onClick={() => setIsLoginModalOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3>Acessar sua conta</h3>
-            <form onSubmit={handleLogin}>
-              <input
-                type="email"
-                placeholder="E-mail"
-                value={loginEmail}
-                onChange={e => setLoginEmail(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Senha"
-                value={loginPassword}
-                onChange={e => setLoginPassword(e.target.value)}
-                required
-              />
-              <button type="submit" className="btn-primary">
-                Entrar
-              </button>
-              <button
-                type="button"
-                className="btn-outline"
-                onClick={() => setIsLoginModalOpen(false)}
-                style={{ marginTop: '12px' }}
-              >
-                Cancelar
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
 
       {/* Conteúdo Original */}
       <div className="App">
@@ -203,7 +114,7 @@ export const MarketInsightsPage = () => {
           </div>
         </header>
 
-        <div className="chart-container">
+        <div id="btc-fgi-chart" className="chart-container">
           <FearAndGreedChartLine />
         </div>
 
