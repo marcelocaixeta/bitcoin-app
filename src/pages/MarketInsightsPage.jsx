@@ -67,7 +67,7 @@ export const MarketInsightsPage = () => {
         </button>
 
         <div className="logo-area">
-          <h2>₿ Indicador de Compra e Venda de Bitcoin</h2>
+          <h2>₿ Índice de Medo e Ganância do Bitcoin</h2>
         </div>
 
         <div className="auth-area">
@@ -91,7 +91,7 @@ export const MarketInsightsPage = () => {
           <li onClick={() => {
             closeMenu();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}>₿ Indicador Principal</li>
+          }}>₿ Índice de Medo e Ganância</li>
           <li onClick={() => {
             closeMenu();
             document.getElementById('indicator-history')?.scrollIntoView({ behavior: 'smooth' });
@@ -156,17 +156,6 @@ export const MarketInsightsPage = () => {
               </div>
             </div>
 
-            <div className="quick-actions">
-              <button className="action-btn" onClick={() => alert('Transferência em desenvolvimento')}>
-                📤 Transferir
-              </button>
-              <button className="action-btn" onClick={() => alert('Compra de BTC em desenvolvimento')}>
-                ₿ Comprar BTC
-              </button>
-              <button className="action-btn" onClick={() => alert('Relatórios em desenvolvimento')}>
-                📊 Relatórios
-              </button>
-            </div>
           </div>
         )}
       </div>

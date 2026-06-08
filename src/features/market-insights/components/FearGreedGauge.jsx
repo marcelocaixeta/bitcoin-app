@@ -5,11 +5,11 @@ import getFearAndGreedService from '../services/fearGreedService';
 
 const translateClassification = (classification) => {
   const translations = {
-    'Extreme Fear': 'Comprar muito',
-    Fear: 'Comprar um pouco',
-    Neutral: 'Juntar Dolares',
-    Greed: 'Vender um pouco',
-    'Extreme Greed': 'Vender muito',
+    'Extreme Fear': 'Medo extremo',
+    Fear: 'Medo',
+    Neutral: 'Neutro',
+    Greed: 'Ganância',
+    'Extreme Greed': 'Ganância extrema',
   };
 
   return translations[classification] || classification;
@@ -17,15 +17,15 @@ const translateClassification = (classification) => {
 
 const classifyByValue = (value) => {
   if (value >= 0 && value <= 24) {
-    return 'Comprar muito';
+    return 'Medo extremo';
   } else if (value >= 25 && value <= 44) {
-    return 'Comprar um pouco';
+    return 'Medo';
   } else if (value >= 45 && value <= 54) {
-    return 'Juntar Dolares';
+    return 'Neutro';
   } else if (value >= 55 && value <= 74) {
-    return 'Vender um pouco';
+    return 'Ganância';
   } else if (value >= 75 && value <= 100) {
-    return 'Vender muito';
+    return 'Ganância Extrema';
   } else {
     return 'Valor fora do intervalo';
   }
@@ -51,7 +51,7 @@ const options = {
     height: '80%',
   },
   title: {
-    text: 'Indicador Principal',
+    text: 'Índice de Medo e Ganância',
     align: 'center',
     x: 0,
     y: 28,
@@ -82,11 +82,11 @@ const options = {
     },
     lineWidth: 0,
     plotBands: [
-      { from: 0, to: 25, color: 'green', thickness: 20 },
-      { from: 25, to: 44.99, color: '#55BF3B', thickness: 20 },
+      { from: 0, to: 25, color: 'red', thickness: 20 },
+      { from: 25, to: 44.99, color: '#DF5353', thickness: 20 },
       { from: 45, to: 54.99, color: '#DDDF0D', thickness: 20 },
-      { from: 55, to: 74.99, color: '#DF5353', thickness: 20 },
-      { from: 75, to: 100, color: 'red', thickness: 20 },
+      { from: 55, to: 74.99, color: '#55BF3B', thickness: 20 },
+      { from: 75, to: 100, color: 'green', thickness: 20 },
     ],
   },
   series: [
